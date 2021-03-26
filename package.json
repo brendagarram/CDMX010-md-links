@@ -10,10 +10,6 @@
   "scripts": {
     "test": "jest --coverage"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brendagarram/CDMX010-md-links"
-  },
   "keywords": [
     "md",
     "markdown",
