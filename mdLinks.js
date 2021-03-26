@@ -186,3 +186,4 @@ inquirer.prompt([
 //absolutePath('C:/Users/negra/Documents/brenda-laboratoria/proyectoCuatro-mdlinks/CDMX010-md-links/filesMdTest');
 //readFile('./testFiles/testFile1.md');
 //absolutePath('./filesMdTest');
+//console.log(sirvo)
