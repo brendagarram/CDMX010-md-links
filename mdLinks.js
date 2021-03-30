@@ -1,9 +1,11 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
 const marked = require('marked');
 const fetch = require('node-fetch');
-const chalk = require('chalk');
+
 
 let arrayMd = [];
 
@@ -28,29 +30,25 @@ const stats = (array) => {
     return countAllResults;
 };
 
-const linkValidation = (linksArray, answer) => {
+const linkValidation = (linksArray) => {
     return new Promise ((resolve, reject) => {
-        if (answer == 'true') {
-            let allLinksInfo = linksArray.map((link) => {
-                return fetch(link.href).then(result => {
-                    if (result.status === 200) {
-                        link.status = result.status;
-                        link.access = 'ok';
-                        //console.log(result.status);
-                    } else {
-                        link.status = result.status,
-                        link.access = 'fail'
-                    }
-                }).catch((error) => console.log(error));
-            });
-        Promise.all(allLinksInfo)
-            .then(() => resolve (linksArray))
-            .catch(err => {
-            reject(console.error('No se obtuvo la información de los links solicitados'))
-            console.log(err)});
-        } else {
-            resolve (linksArray);
-        }
+        let allLinksInfo = linksArray.map((link) => {
+            return fetch(link.href).then(result => {
+                if (result.status === 200) {
+                    link.status = result.status;
+                    link.access = 'ok';
+                    //console.log(result.status);
+                } else {
+                    link.status = result.status,
+                    link.access = 'fail'
+                }
+            }).catch((error) => console.log(error));
+        });
+     Promise.all(allLinksInfo)
+        .then(() => resolve (linksArray))
+        .catch(err => {
+        reject(console.error('No se obtuvo la información de los links solicitados'))
+        console.log(err)});
     });
 };
 
@@ -87,7 +85,6 @@ const readFile = (file_path) => {
 const isFileOrDirectory = (file_path) => {
     const stats = fs.lstatSync(file_path);
         if (stats.isDirectory()) {
-            console.log('soy un directorio');
             let files = fs.readdirSync(file_path);
             files.forEach(file => {
             let fileRoute = path.join(file_path, file);
@@ -97,7 +94,7 @@ const isFileOrDirectory = (file_path) => {
                 isFileOrDirectory(fileRoute);
                 }
             })
-            console.log(arrayMd);
+            //console.log(arrayMd);
             return arrayMd;
             } else if (stats.isFile()) {
                 if(path.extname(file_path) === '.md') {
@@ -110,7 +107,7 @@ const isFileOrDirectory = (file_path) => {
 };
 
 //  Transformar a ruta absoluta
-const getLinksAllFiles = (file_path, validate) => { 
+const getLinksAllFiles = (file_path) => { 
     // Evalúa si la ruta es absoluta, si no lo es, la convierte en absoluta
         let givenPath = '';
         if(path.isAbsolute(file_path)) {
@@ -118,9 +115,9 @@ const getLinksAllFiles = (file_path, validate) => {
         } else  {
             givenPath = path.resolve(file_path);
         }
-        // let arrayPaths = isFileOrDirectory(givenPath);
-        // let allFilesPaths = arrayPaths.map(readFile);
-        // Promise.all(allFilesPaths)
+        let arrayPaths = isFileOrDirectory(givenPath);
+        let allFilesPaths = arrayPaths.map(readFile);
+        return Promise.all(allFilesPaths);
         //     .then(result => { 
         //         let arrayLinks = result;
         //         let mergedArray = arrayLinks.flat();
@@ -150,24 +147,24 @@ module.exports = {
 }
 
 //Input para probar rutas combinaciones
-inquirer.prompt([
-    {
-        type: 'input',
-        name: 'path', 
-        message: 'Indica la ruta del directorio o archivo',
-    }, 
-    {
-        type: 'list',
-        name: 'validate',
-        message: 'Do you want to validate the links?',
-        choices: [
-            'true',
-            'false'
-        ]
+// inquirer.prompt([
+//     {
+//         type: 'input',
+//         name: 'path', 
+//         message: 'Indica la ruta del directorio o archivo',
+//     }, 
+//     {
+//         type: 'list',
+//         name: 'validate',
+//         message: 'Do you want to validate the links?',
+//         choices: [
+//             'true',
+//             'false'
+//         ]
 
-    }
-]).then(answer => getLinksAllFiles(answer.path, answer.validate))
-  .catch(error => console.log(error));
+//     }
+// ]).then(answer => getLinksAllFiles(answer.path, answer.validate))
+//   .catch(error => console.log(error));
 //absolutePath('C:/Users/negra/Documents/brenda-laboratoria/proyectoCuatro-mdlinks/CDMX010-md-links/filesMdTest');
 //readFile('./testFiles/testFile1.md');
 //absolutePath('./filesMdTest');

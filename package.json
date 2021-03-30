@@ -1,9 +1,12 @@
 {
-  "name": "md-links",
-  "version": "0.1.0",
-  "license": "MIT",
+  "name": "mmdlinks",
+  "version": "1.0.0",
   "description": "Software that verifies links from markdown files",
-  "main": ".index.js",
+  "license": "ISC",
+  "main": "./index.js",
+  "bin": {
+    "mmdlinks": "mdLinks.js"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -16,9 +19,10 @@
     "links",
     "node.js"
   ],
+  "pkg": {
+    "targets": [ "node15-win-x64" ]
+  },
   "author": "Brenda García Ramírez",
-  "bugs": {},
-  "homepage": "",
   "dependencies": {
     "chalk": "^4.1.0",
     "fetch": "^1.1.0",
