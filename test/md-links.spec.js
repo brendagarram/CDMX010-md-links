@@ -54,44 +54,7 @@ describe('mdlinks returns a promise with information about all links', () => {
   it('should return info of each link', () => {
     return (mdLinks('C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest', arguments0))
     .then((result) => {
-      expect(result).toEqual([  
-        {
-          href: 'https://jestjs.io/docs/es-ES/getting-started',
-          text: 'Testeo unitario.',
-          file: 'testFile3.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\moreMds\\testFile3.md'
-        },
-        {
-          href: 'https://jestjs.io/docs/es-ES/asynchronous',
-          text: 'Testeo asíncrono.',
-          file: 'testFile3.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\moreMds\\testFile3.md'
-        },
-        {
-          href: 'https://jestjs.io/docs/es-ES/manual-mocks',
-          text: 'Uso de librerias de Mock.',
-          file: 'testFile3.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\moreMds\\testFile3.md'
-        },
-        {
-          href: 'https://nodejs.org/api/http.html#http_http_get_options_callback',
-          text: 'http.get',
-          file: 'testFile1.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\testFile1.md'
-        },
-        {
-          href: 'https://www.youtube.com/watch?v=lPPgY3HLlhQ',
-          text: 'Recursión.',
-          file: 'testFile1.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\testFile1.md'
-        },
-        {
-          href: 'https://nodejs.org/api/http.htmloptions_callback',
-          text: 'Roto',
-          file: 'testFile1.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\testFile1.md'
-        }
-      ]);
+      expect(result).toEqual(mocks.arrayLinksInfo1);
     });
   });
   it('should return info of each link with relative path of file', () => {
@@ -102,44 +65,7 @@ describe('mdlinks returns a promise with information about all links', () => {
   it('should return info of each link with relative path of directory', () => {
     return (mdLinks('./filesMdTest', arguments0))
     .then((result) => {
-      expect(result).toStrictEqual([  
-        {
-          href: 'https://jestjs.io/docs/es-ES/getting-started',
-          text: 'Testeo unitario.',
-          file: 'testFile3.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\moreMds\\testFile3.md'
-        },
-        {
-          href: 'https://jestjs.io/docs/es-ES/asynchronous',
-          text: 'Testeo asíncrono.',
-          file: 'testFile3.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\moreMds\\testFile3.md'
-        },
-        {
-          href: 'https://jestjs.io/docs/es-ES/manual-mocks',
-          text: 'Uso de librerias de Mock.',
-          file: 'testFile3.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\moreMds\\testFile3.md'
-        },
-        {
-          href: 'https://nodejs.org/api/http.html#http_http_get_options_callback',
-          text: 'http.get',
-          file: 'testFile1.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\testFile1.md'
-        },
-        {
-          href: 'https://www.youtube.com/watch?v=lPPgY3HLlhQ',
-          text: 'Recursión.',
-          file: 'testFile1.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\testFile1.md'
-        },
-        {
-          href: 'https://nodejs.org/api/http.htmloptions_callback',
-          text: 'Roto',
-          file: 'testFile1.md',
-          path: 'C:\\Users\\negra\\Documents\\brenda-laboratoria\\proyectoCuatro-mdlinks\\CDMX010-md-links\\filesMdTest\\testFile1.md'
-        }
-      ])
+      expect(result).toStrictEqual(mocks.arrayLinksVal1)
     });
   });
       it('should return info of each link with relative path of file', () => {
