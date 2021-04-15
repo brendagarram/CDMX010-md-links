@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const inquirer = require('inquirer');
 const marked = require('marked');
 const fetch = require('node-fetch');
 
@@ -12,34 +11,34 @@ const stats = (array) => {
     let uniqueLinks;
     let allResults = [];
     let countAllResults = {};
-        if((Object.keys(array[0])).includes('access')) {
-            array.forEach((element) => {
-                allResults.push(element);
-                if(element.access === 'ok') {
-                    activeLinks.push(element);
-                } else if (element.access === 'fail') {
-                    brokenLinks.push(element);
-                }
-            });
-            uniqueLinks = [...new Set(allResults)]; 
-            countAllResults = [{
-                total: allResults.length,
-                unique: uniqueLinks.length,
-                active: activeLinks.length,
-                broken: brokenLinks.length,
-            }]
-            return countAllResults;
-        } else {
-            array.forEach((element) => {
-                allResults.push(element);
-            });
-            uniqueLinks = [...new Set(allResults)];
-            countAllResults = [{
-                total: allResults.length,
-                unique: uniqueLinks.length,
-            }]
-            return countAllResults;
-        }
+    if((Object.keys(array[0])).includes('access')) {
+        array.forEach((element) => {
+            allResults.push(element);
+            if(element.access === 'ok') {
+                activeLinks.push(element);
+            } else if (element.access === 'fail') {
+                brokenLinks.push(element);
+            }
+        });
+        uniqueLinks = [...new Set(allResults)]; 
+        countAllResults = [{
+            total: allResults.length,
+            unique: uniqueLinks.length,
+            active: activeLinks.length,
+            broken: brokenLinks.length,
+        }]
+        return countAllResults;
+    } else {
+        array.forEach((element) => {
+            allResults.push(element);
+        });
+        uniqueLinks = [...new Set(allResults)];
+        countAllResults = [{
+            total: allResults.length,
+            unique: uniqueLinks.length,
+        }]
+        return countAllResults;
+    }
 };
 
 const linkValidation = (linksArray) => {
@@ -48,15 +47,7 @@ const linkValidation = (linksArray) => {
             return fetch(link.href)
                 .then(result => {
                     link.status = result.status;
-                    link.access = result.status == 200 ? 'ok' : 'fail'; 
-                    // if (result.status === 200) {
-                    //     link.status = result.status;
-                    //     link.access = 'ok';
-                    // //console.log(result.status);
-                    // } else {
-                    //     link.status = result.status,
-                    //     link.access = 'fail'
-                    // }
+                    link.access = (result.status == 200) ? 'ok' : 'fail'; 
                 })
                 .catch((error) => console.log(error));
         });
@@ -71,12 +62,12 @@ const linkValidation = (linksArray) => {
 const readFile = (file_path) => {
     // console.log(file_path);
     return new Promise ((resolve, reject) => {
-    fs.readFile(file_path, "utf-8", (err, data) => {
-        if (err) { 
-            reject('El archivo no se puede leer');
-        } else {
-            let fileName = path.basename(file_path);
-            let links = [];
+        fs.readFile(file_path, "utf-8", (err, data) => {
+            if (err) { 
+                reject('El archivo no se puede leer');
+            } else {
+                let fileName = path.basename(file_path);
+                let links = [];
                 const renderer = new marked.Renderer();
                 renderer.link = (href, title, text) => {
                     if(href.charAt(0) !== '#') {
@@ -88,10 +79,10 @@ const readFile = (file_path) => {
                         });
                     }
                 };
-                marked(data, {renderer: renderer});
-                resolve(links);
-            };
-        });
+            marked(data, {renderer: renderer});
+            resolve(links);
+            }
+        })
     });
 };
 
@@ -102,8 +93,8 @@ const isFileOrDirectory = (file_path) => {
         if (stats.isDirectory()) {
             let files = fs.readdirSync(file_path);
             files.forEach(file => {
-            let fileRoute = path.join(file_path, file);
-            const statsContent = fs.lstatSync(fileRoute);
+                let fileRoute = path.join(file_path, file);
+                const statsContent = fs.lstatSync(fileRoute);
                 if(path.extname(file) === '.md') {
                     arrayMd.push(fileRoute);
                 } else if (statsContent.isDirectory()) {
@@ -111,18 +102,17 @@ const isFileOrDirectory = (file_path) => {
                 }
             });
             return arrayMd;
-            } else if (stats.isFile()) {
-                if(path.extname(file_path) === '.md') {
-                    arrayMd.push(file_path);
-                    return arrayMd;
-                } else {
-                    return ('No se encontró ningún archivo con extensión ".md"');
-                }
-            };
+        } else if (stats.isFile()) {
+            if(path.extname(file_path) === '.md') {
+                arrayMd.push(file_path);
+                return arrayMd;
+            } else {
+                return ('No se encontró ningún archivo con extensión ".md"');
+            }
+        }
     } else {
         return('No existe el directorio/archivo');
-      }
-    
+    }
 };
 
 //  Transformar a ruta absoluta
@@ -153,7 +143,7 @@ const getLinksAllFiles = (file_path) => {
             }).catch(() => {
                 reject('No se obtuvieron los links');
             });
-         } else {
+        } else {
             reject(arrayPaths);
         }
     });

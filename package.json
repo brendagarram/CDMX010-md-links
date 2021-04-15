@@ -14,6 +14,10 @@
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brendagarram/CDMX010-md-links"
+  },
   "keywords": [
     "md",
     "markdown",
@@ -26,6 +30,10 @@
     ]
   },
   "author": "Brenda García Ramírez",
+  "bugs": {
+    "url": "https://github.com/brendagarram/CDMX010-md-links/issues"
+  },
+  "homepage": "https://github.com/brendagarram/CDMX010-md-links/blob/master/README.md",
   "dependencies": {
     "asciitable": "^0.0.7",
     "chalk": "^4.1.0",
@@ -39,6 +47,8 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "jest": "^26.6.3"
   }
 }
