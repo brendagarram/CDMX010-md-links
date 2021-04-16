@@ -111,28 +111,28 @@ describe('mdlinks returns a promise with information about all links', () => {
       });
       it('should return a message indicates no found md files', () => {
         return (mdLinks('./filesMdTest/testFile3.txt', helpers.arguments0))
-        .catch((result) => {
-          expect(result).toStrictEqual('No se encontró ningún archivo con extensión ".md"')});
+        .catch((error) => {
+          expect(error.message).toStrictEqual('No se encontró ningún archivo con extensión ".md"')});
       });
       it('should return a message indicates invalid path', () => {
         return (mdLinks('./filesMdTet', helpers.arguments0))
-        .catch((result) => {
-          expect(result).toStrictEqual('No existe el directorio/archivo')});
+        .catch((error) => {
+          expect(error.message).toStrictEqual('No existe el directorio/archivo')});
       });
       it('should return a message indicates invalid path', () => {
         return (mdLinks('./filesMdTet', helpers.arguments1))
-        .catch((result) => {
-          expect(result).toStrictEqual('No existe el directorio/archivo')});
+        .catch((error) => {
+          expect(error.message).toStrictEqual('No existe el directorio/archivo')});
       });
       it('should return a message indicates invalid path', () => {
         return (mdLinks('./filesMdTet', helpers.arguments2))
-        .catch((result) => {
-          expect(result).toStrictEqual('No existe el directorio/archivo')});
+        .catch((error) => {
+          expect(error.message).toStrictEqual('No existe el directorio/archivo')});
       });
       it('should return a message indicates do not find links', () => {
         return (mdLinks('./filesMdTest/testFile4.md', helpers.arguments2))
-        .catch((result) => {
-          expect(result).toStrictEqual('No se encontraron links en los archivos o directorios indicados')});
+        .catch((error) => {
+          expect(error.message).toStrictEqual('No se encontraron links en los archivos o directorios indicados')});
       });
 });
 
