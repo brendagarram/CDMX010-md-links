@@ -54,7 +54,7 @@ const linkValidation = (linksArray) => {
      Promise.all(allLinksInfo)
         .then(() => resolve (linksArray))
         .catch(() => {
-            reject('No se obtuvo la información de los links solicitados');
+            reject(new Error('No se obtuvo la información de los links solicitados'));
         });
     });
 };
@@ -137,14 +137,14 @@ const getLinksAllFiles = (file_path) => {
                 if(mergedArray.length !== 0) {
                     resolve(mergedArray);
                 } else {
-                    reject('No se encontraron links en los archivos o directorios indicados')
+                    reject(new Error('No se encontraron links en los archivos o directorios indicados'))
                 }
                 resolve(mergedArray);
             }).catch(() => {
-                reject('No se obtuvieron los links');
+                reject(new Error('No se obtuvieron los links'));
             });
         } else {
-            reject(arrayPaths);
+            reject(new Error(arrayPaths));
         }
     });
 };
